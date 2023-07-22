@@ -6,7 +6,7 @@
 # Температуры – целые числа и лежат в диапазоне от –50 до 50.
 
 n = int(input('Введите количество дней: '))
-tem = input('Введите значения температуры: ')
+tem = input('Введите значения температуры через пробел: ')
 temList = tem.split(" ")
 count = 0
 i = 0
@@ -16,15 +16,8 @@ for i in range(len(temList)):
     else: count = 0
     t.append(count)
 maximum = t[0]
-i = 0
+i = 1
 for i in range(len(t)):
-    if maximum < t[i]: m = t[i]
+    if maximum < t[i]: maximum = t[i]
 print(maximum)
-
-
-        
-
-
-
-
     
