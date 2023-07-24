@@ -13,3 +13,5 @@ for i in range(len(a)):
     if x == a[i]: count +=1
 print(count)
 
+# c = a.count(x)
+# print(c)
