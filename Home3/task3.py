@@ -74,5 +74,12 @@ for i in range(len(str)):
         res += int(p)
 print(res)
 
-
+# for i in range(len(str)):
+#     if ord('A') == 65:
+#         p = usa.get(str[i])
+#         res += int(p)
+#     else:
+#         p = ru.get(str[i])
+#         res += int(p)
+# print(res)
     
