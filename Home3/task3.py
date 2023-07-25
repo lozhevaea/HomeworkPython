@@ -58,13 +58,19 @@ str = input('Введите слово: ')
 str = str.upper()
 # print(str)
 
+# w = []
+# for i in range(len(str)):
+#     w.append(str[i])
+# # print(w)
+
 res = 0
 for i in range(len(str)):
-    if ord('A') == 65:
-        p = usa.get(str[i])
+    if ord('A') != 65:
+        p = ru.setdefault(str[i], 0)
         res += int(p)
+        print(ru)
     else:
-        p = ru.get(str[i])
+        p = usa.setdefault(str[i], 0)
         res += int(p)
 print(res)
 
