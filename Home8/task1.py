@@ -10,7 +10,7 @@ def work_with_phonebook():
             print_result(phone_book)
         elif choice==2:
             last_name=input('Фамилия ')
-            print(find_by_lastname(phone_book,last_name))
+            print(*find_by_lastname(phone_book,last_name))
         elif choice==3:
             last_name=input('Фамилия ')
             new_number=input('Новый номер телефона ')
@@ -20,14 +20,14 @@ def work_with_phonebook():
             print(delete_by_lastname(phone_book,lastname))
         elif choice==5:
             number=input('Номер ')
-            print(find_by_number(phone_book,number))
+            find_by_number(phone_book,number)
         elif choice==6:
-            user_data=input('new data ')
+            user_data=input('Новая запись (Введите Фамилию, Имя, Телефон, Описание): ')
             add_user(phone_book,user_data)
-            write_txt('phonebook.txt',phone_book)
+            print(write_txt('phonebook.txt',phone_book))
         choice=show_menu()
     
-
+# меню запрос для пользователя
 def show_menu():
     print('1. Распечатать справочник\n'
         '2. Найти телефон по фамилии\n'
@@ -39,7 +39,8 @@ def show_menu():
     choice=int(input())
     return choice
 
-def read_txt(phonebook):
+# создаем список из словарей для работы
+def read_txt(filename):
     phone_book=[]
     fields=['Фамилия', 'Имя', 'Телефон', 'Описание']
     # fields = ['lastname ', 'name ', 'number ', 'comment']
@@ -49,24 +50,77 @@ def read_txt(phonebook):
             phone_book.append(record)
     return phone_book
 
-def write_txt(phonebook,phone_book):
-    with open('phonebook.txt','w',encoding='utf-8') as phout:
+# 1. Распечатать телефонный справочник
+def print_result(phone_book):
+    for i in phone_book:
+        print(i)   #(f'{i}\n')
+             
+
+# 2. Найти телефон по фамилии
+def find_by_lastname(phone_book,last_name):
+    name = last_name.strip()
+    fio = []
+    for i in phone_book:
+        if i['Фамилия'] == name:
+            fio.append(i)
+    if len(fio)==0: print('Абонента в справочнике нет')
+    return fio
+
+# 3. Изменить номер телефона
+def change_number(phone_book,last_name,new_number):
+    name = last_name.strip()
+    number = new_number.strip()
+    fio = []
+    for i in phone_book:
+        if i['Фамилия'] == name:
+            print(i)
+            f = input('Хотите изменить этот номер телефона? да/нет ')
+            if f == 'да':
+                i['Телефон'] = number
+                fio.append(i)
+    return fio # phone_book
+
+# 4. Удалить запись
+def delete_by_lastname(phone_book,lastname):
+    name = lastname.strip()
+    fio = []
+    for i in phone_book:
+        if i['Фамилия'] == name:
+            print(i)
+            f = input('Хотите удалить эту запись? да/нет ').lower()
+            if f == 'да':
+                fio.append(i)
+                phone_book.remove(i)
+                print('Запись удалена')
+    return fio  # phone_book
+    
+# 5. Найти абонента по номеру телефона
+def find_by_number(phone_book,number):
+    number = number.strip()
+    count = 0
+    for i in phone_book:
+        if i['Телефон'] == number:
+            print(i)
+            count +=1
+    if count == 0: print('Абонента с таким номером телефона нет')
+    else: print(f'Найдено {count} абонентов')
+
+# 6. Добавить абонента в справочник
+def add_user(phone_book,user_data):
+    fields=['Фамилия', 'Имя', 'Телефон', 'Описание']
+    n = dict(zip(fields,user_data.strip().split(',')))
+    print(n)
+    phone_book.append(n)
+    return phone_book
+
+def write_txt(filename,phone_book):
+    with open('phonebook.txt','w',encoding='utf-8') as fio:
+        
         for i in range(len(phone_book)):
             s=''
             for v in phone_book[i].values():
                 s+=v+','
-                phout.write(f'{s[:-1]}\n')
-
-def print_result(phone_book):
-    phone_book.readlines()
-    # for i in phone_book:
-    #     print(f'{i}\n')
-
-# f = open('C:/Users/ASUS/Downloads/phon.txt')
-# print_result(f)
-# f.isatty()
-# f.close
+                fio.write(f'{s[:-1]}\n')
+    return fio
 
 work_with_phonebook()
-# C:\Users\ASUS\Downloads\phonebook.csv
-# C:\Users\ASUS\Downloads\phon.txt
