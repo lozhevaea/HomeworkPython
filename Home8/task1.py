@@ -14,10 +14,10 @@ def work_with_phonebook():
         elif choice==3:
             last_name=input('Фамилия ')
             new_number=input('Новый номер телефона ')
-            print(change_number(phone_book,last_name,new_number))
+            change_number(phone_book,last_name,new_number)
         elif choice==4:
             lastname=input('Фамилия ')
-            print(delete_by_lastname(phone_book,lastname))
+            delete_by_lastname(phone_book,lastname)
         elif choice==5:
             number=input('Номер ')
             find_by_number(phone_book,number)
@@ -26,6 +26,10 @@ def work_with_phonebook():
             add_user(phone_book,user_data)
             print(write_txt('phonebook.txt',phone_book))
         choice=show_menu()
+    f = input('Хотите сохранить изменения? да/нет ').lower()
+    if f == 'да':
+        write_txt('phonebook.txt',phone_book)
+        print('Изменения сохранены')
     
 # меню запрос для пользователя
 def show_menu():
@@ -74,11 +78,12 @@ def change_number(phone_book,last_name,new_number):
     for i in phone_book:
         if i['Фамилия'] == name:
             print(i)
-            f = input('Хотите изменить этот номер телефона? да/нет ')
+            f = input('Хотите изменить этот номер телефона? да/нет ').lower()
             if f == 'да':
                 i['Телефон'] = number
                 fio.append(i)
-    return fio # phone_book
+                print('Номер изменен ')
+        return phone_book
 
 # 4. Удалить запись
 def delete_by_lastname(phone_book,lastname):
@@ -92,7 +97,7 @@ def delete_by_lastname(phone_book,lastname):
                 fio.append(i)
                 phone_book.remove(i)
                 print('Запись удалена')
-    return fio  # phone_book
+    return phone_book
     
 # 5. Найти абонента по номеру телефона
 def find_by_number(phone_book,number):
@@ -120,7 +125,7 @@ def write_txt(filename,phone_book):
             s=''
             for v in phone_book[i].values():
                 s+=v+','
-                fio.write(f'{s[:-1]}\n')
+            fio.write(f'{s[:-1]}\n')
     return fio
 
 work_with_phonebook()
