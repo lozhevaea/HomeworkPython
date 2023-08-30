@@ -24,7 +24,6 @@ def work_with_phonebook():
         elif choice==6:
             user_data=input('Новая запись (Введите Фамилию, Имя, Телефон, Описание): ')
             add_user(phone_book,user_data)
-            print(write_txt('phonebook.txt',phone_book))
         choice=show_menu()
     f = input('Хотите сохранить изменения? да/нет ').lower()
     if f == 'да':
